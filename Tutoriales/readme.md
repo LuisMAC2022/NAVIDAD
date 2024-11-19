@@ -9,3 +9,5 @@ https://www.youtube.com/watch?v=KY81igoV8W0&list=PLU8oAlHdN5BmmxXT0C2HO0bLRHZFWK
 Definicion de integracion y tutorial de acercamientos  https://www.youtube.com/watch?v=QYCaaNz8emY
 
 Alpha y Beta test https://www.youtube.com/watch?v=Yo5-0Q0S_ks
+
+Accesibilidad para personas ciegas https://www.youtube.com/watch?v=oKgN4va-gas
