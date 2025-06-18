@@ -9,7 +9,7 @@ body {
 }
 
 #gameCanvas {
-  background: #eee;
+  background: #87CEEB;
   touch-action: none; /* Evita el doble tap en moviles */
   width: 100%;
   height: auto;
