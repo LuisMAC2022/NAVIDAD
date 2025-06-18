@@ -6,6 +6,8 @@ const ctx = canvas.getContext('2d');
 
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
+// Ajusta la posicion vertical para mantener un margen de 20px
+jugador.y = canvas.height - jugador.alto / 2 - 20;
 let direccion = 0; // -1 izquierda, 1 derecha
 // Lleva la cuenta del tiempo previo para calcular deltaTime
 let tiempoAnterior = 0;
