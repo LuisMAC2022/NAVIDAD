@@ -8,6 +8,6 @@ Este directorio contiene la nueva versión en JavaScript del juego navideño.
 - **assets/**: recursos opcionales como imágenes o sonidos.
 - **legacy/**: código original en Processing.
 
-El prototipo actual implementa únicamente la heroína y un proyectil con valor `1` que cae desde la parte superior. Para representarlo se usa la imagen `public/assets/bananana.png`. Si la jugadora lo atrapa, la puntuación aumenta.
+El prototipo actual implementa únicamente la heroína y un proyectil con valor `1` que cae desde la parte superior. La heroína se representa con la imagen `public/assets/cent.png` y el proyectil con `public/assets/bananana.png`. Si la jugadora lo atrapa, la puntuación aumenta.
 
 Para probarlo localmente basta con abrir `public/index.html` en un navegador moderno. El repositorio está preparado para publicarse en GitHub Pages utilizando la carpeta `public` como raíz.

@@ -1,4 +1,8 @@
 // Clase que representa al jugador
+// Imagen utilizada para representar al jugador
+const imagenJugador = new Image();
+imagenJugador.src = 'assets/cent.png';
+
 export default class Jugador {
   constructor(x, y) {
     this.x = x;
@@ -17,7 +21,12 @@ export default class Jugador {
   }
 
   dibujar(ctx) {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.x - this.ancho / 2, this.y - this.alto / 2, this.ancho, this.alto);
+    ctx.drawImage(
+      imagenJugador,
+      this.x - this.ancho / 2,
+      this.y - this.alto / 2,
+      this.ancho,
+      this.alto
+    );
   }
 }
