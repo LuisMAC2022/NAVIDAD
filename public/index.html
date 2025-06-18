@@ -10,8 +10,11 @@
   <!-- Canvas principal donde se dibuja el juego -->
   <audio id="bgm" src="assets/happy.mp3" autoplay loop></audio>
   <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <!-- Marcador de puntuación -->
+  <!-- HUD de juego -->
+  <div id="lives"></div>
+  <div id="timer"><img src="assets/reloj.png" /><span id="time">1:00</span></div>
   <div id="score">Puntuación: 0</div>
+  <div id="gameOver" class="hidden"></div>
   <script type="module" src="game.js"></script>
 </body>
 </html>
