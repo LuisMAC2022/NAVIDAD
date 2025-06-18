@@ -1,0 +1,23 @@
+/* Estilos basicos para centrar el canvas y el marcador */
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #222;
+}
+
+#gameCanvas {
+  background: #eee;
+  touch-action: none; /* Evita el doble tap en moviles */
+}
+
+#score {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 20px;
+}
