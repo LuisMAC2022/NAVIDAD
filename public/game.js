@@ -4,8 +4,20 @@ import Proyectil from '../src/proyectil.js';
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  jugador.x = canvas.width / 2;
+  jugador.y = canvas.height - 30;
+});
 let direccion = 0; // -1 izquierda, 1 derecha
 
 // Crea un proyectil en x aleatoria y valor positivo
