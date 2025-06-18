@@ -3,15 +3,17 @@ export default class Jugador {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.velocidad = 5;
+    // Velocidad en pixeles por segundo. 5 px por frame a 60fps serian 300
+    // pero un poco menos rapido para mejor control
+    this.velocidad = 250;
     this.ancho = 50;
     this.alto = 20;
     this.puntuacion = 0;
   }
 
-  mover(direccion) {
+  mover(direccion, deltaTime) {
     // direccion: -1 para izquierda, 1 para derecha
-    this.x += direccion * this.velocidad;
+    this.x += direccion * this.velocidad * deltaTime;
   }
 
   dibujar(ctx) {

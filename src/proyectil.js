@@ -4,12 +4,14 @@ export default class Proyectil {
     this.x = x;
     this.y = y;
     this.valor = valor;
-    this.velocidad = 3;
+    // Velocidad en pixeles por segundo. Antes eran 3 px por fotograma a 60fps
+    this.velocidad = 180;
     this.tamano = 20;
   }
 
-  actualizar() {
-    this.y += this.velocidad;
+  // deltaTime corresponde al tiempo transcurrido en segundos desde el ultimo frame
+  actualizar(deltaTime) {
+    this.y += this.velocidad * deltaTime;
   }
 
   dibujar(ctx) {
