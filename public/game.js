@@ -7,6 +7,8 @@ const ctx = canvas.getContext('2d');
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
 let direccion = 0; // -1 izquierda, 1 derecha
+// Lleva la cuenta del tiempo previo para calcular deltaTime
+let tiempoAnterior = 0;
 
 // Crea un proyectil en x aleatoria y valor positivo
 function crearProyectil() {
@@ -37,17 +39,20 @@ canvas.addEventListener('touchend', () => {
   direccion = 0;
 });
 
-function bucle() {
+function bucle(timestamp) {
+  // Calcula el tiempo transcurrido en segundos
+  const deltaTime = (timestamp - tiempoAnterior) / 1000 || 0;
+  tiempoAnterior = timestamp;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Actualizar y dibujar jugador
-  jugador.mover(direccion);
+  jugador.mover(direccion, deltaTime);
   // Evita que salga del canvas
   jugador.x = Math.max(jugador.ancho / 2, Math.min(canvas.width - jugador.ancho / 2, jugador.x));
   jugador.dibujar(ctx);
 
   // Actualizar proyectil
-  proyectil.actualizar();
+  proyectil.actualizar(deltaTime);
   proyectil.dibujar(ctx);
 
   if (proyectil.colisionaCon(jugador)) {
@@ -62,4 +67,5 @@ function bucle() {
 }
 
 actualizarMarcador();
-bucle();
+// Inicia el bucle de animacion con requestAnimationFrame
+requestAnimationFrame(bucle);
