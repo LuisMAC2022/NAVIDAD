@@ -10,7 +10,7 @@ export default class Proyectil {
     this.valor = valor;
     // Velocidad en pixeles por segundo. Antes eran 3 px por fotograma a 60fps
     this.velocidad = 180;
-    this.tamano = 20;
+    this.tamano = 35;
   }
 
   // deltaTime corresponde al tiempo transcurrido en segundos desde el ultimo frame

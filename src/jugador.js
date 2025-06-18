@@ -10,8 +10,8 @@ export default class Jugador {
     // Velocidad en pixeles por segundo. 5 px por frame a 60fps serian 300
     // pero un poco menos rapido para mejor control
     this.velocidad = 250;
-    this.ancho = 50;
-    this.alto = 20;
+    this.ancho = 60;
+    this.alto = 90;
     this.puntuacion = 0;
   }
 
