@@ -13,20 +13,38 @@ export default class Jugador {
     this.ancho = 60;
     this.alto = 90;
     this.puntuacion = 0;
+    // -1 mirando a la izquierda, 1 a la derecha
+    this.orientacion = -1;
   }
 
   mover(direccion, deltaTime) {
     // direccion: -1 para izquierda, 1 para derecha
     this.x += direccion * this.velocidad * deltaTime;
+    // Actualiza la orientacion solo si se esta moviendo
+    if (direccion !== 0) this.orientacion = direccion;
   }
 
   dibujar(ctx) {
-    ctx.drawImage(
-      imagenJugador,
-      this.x - this.ancho / 2,
-      this.y - this.alto / 2,
-      this.ancho,
-      this.alto
-    );
+    ctx.save();
+    if (this.orientacion === 1) {
+      // Para reflejar la imagen horizontalmente
+      ctx.scale(-1, 1);
+      ctx.drawImage(
+        imagenJugador,
+        -this.x - this.ancho / 2,
+        this.y - this.alto / 2,
+        this.ancho,
+        this.alto
+      );
+    } else {
+      ctx.drawImage(
+        imagenJugador,
+        this.x - this.ancho / 2,
+        this.y - this.alto / 2,
+        this.ancho,
+        this.alto
+      );
+    }
+    ctx.restore();
   }
 }
