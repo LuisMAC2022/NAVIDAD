@@ -4,15 +4,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #87CEEB;
 }
 
 #gameCanvas {
   background: #eee;
   touch-action: none; /* Evita el doble tap en moviles */
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: auto;
   max-width: 100vw;
   max-height: 100vh;
 }
