@@ -4,20 +4,8 @@ import Proyectil from '../src/proyectil.js';
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
-window.addEventListener('resize', () => {
-  resizeCanvas();
-  jugador.x = canvas.width / 2;
-  jugador.y = canvas.height - 30;
-});
 let direccion = 0; // -1 izquierda, 1 derecha
 
 // Crea un proyectil en x aleatoria y valor positivo
@@ -41,8 +29,9 @@ window.addEventListener('keyup', (e) => {
 
 // Controles táctiles: tocar lado izquierdo o derecho de la pantalla
 canvas.addEventListener('touchstart', (e) => {
-  const x = e.touches[0].clientX - canvas.getBoundingClientRect().left;
-  direccion = x < canvas.width / 2 ? -1 : 1;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.touches[0].clientX - rect.left;
+  direccion = x < rect.width / 2 ? -1 : 1;
 });
 canvas.addEventListener('touchend', () => {
   direccion = 0;
