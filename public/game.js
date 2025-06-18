@@ -41,8 +41,9 @@ window.addEventListener('keyup', (e) => {
 
 // Controles táctiles: tocar lado izquierdo o derecho de la pantalla
 canvas.addEventListener('touchstart', (e) => {
-  const x = e.touches[0].clientX - canvas.getBoundingClientRect().left;
-  direccion = x < canvas.width / 2 ? -1 : 1;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.touches[0].clientX - rect.left;
+  direccion = x < rect.width / 2 ? -1 : 1;
 });
 canvas.addEventListener('touchend', () => {
   direccion = 0;
