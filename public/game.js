@@ -3,27 +3,57 @@ import Proyectil from '../src/proyectil.js';
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
+const bgm = document.getElementById('bgm');
 
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
 // Ajusta la posicion vertical para mantener un margen de 20px
 jugador.y = canvas.height - jugador.alto / 2 - 20;
 let direccion = 0; // -1 izquierda, 1 derecha
-// Lleva la cuenta del tiempo previo para calcular deltaTime
 let tiempoAnterior = 0;
 
-// Crea un proyectil en x aleatoria y valor positivo
+let vidas = 3;
+const maxVidas = 7;
+let tiempoRestante = 60; // segundos
+let juegoTerminado = false;
+
 function crearProyectil() {
-  return new Proyectil(Math.random() * canvas.width, 0, 1);
+  const tipos = ['corazon', 'calavera', 'reloj'];
+  const tipo = tipos[Math.floor(Math.random() * tipos.length)];
+  return new Proyectil(Math.random() * canvas.width, 0, tipo, 1);
 }
 let proyectil = crearProyectil();
 
-function actualizarMarcador() {
+function formatearTiempo(t) {
+  const m = Math.floor(t / 60);
+  const s = Math.floor(t % 60).toString().padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function actualizarHud() {
   document.getElementById('score').textContent = `Puntuación: ${jugador.puntuacion}`;
+  const contenedorVidas = document.getElementById('lives');
+  contenedorVidas.innerHTML = '';
+  for (let i = 0; i < vidas; i++) {
+    const img = document.createElement('img');
+    img.src = 'assets/cora.png';
+    contenedorVidas.appendChild(img);
+  }
+  document.getElementById('time').textContent = formatearTiempo(tiempoRestante);
+}
+
+function finDelJuego() {
+  juegoTerminado = true;
+  direccion = 0;
+  bgm.pause();
+  const mensaje = document.getElementById('gameOver');
+  mensaje.textContent = `Puntuación final: ${jugador.puntuacion}`;
+  mensaje.classList.remove('hidden');
 }
 
 // Control por teclado
 window.addEventListener('keydown', (e) => {
+  if (juegoTerminado) return;
   if (e.key === 'ArrowLeft' || e.key === 'a') direccion = -1;
   if (e.key === 'ArrowRight' || e.key === 'd') direccion = 1;
 });
@@ -31,8 +61,8 @@ window.addEventListener('keyup', (e) => {
   if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'ArrowRight' || e.key === 'd') direccion = 0;
 });
 
-// Controles táctiles: tocar lado izquierdo o derecho de la pantalla
 canvas.addEventListener('touchstart', (e) => {
+  if (juegoTerminado) return;
   const rect = canvas.getBoundingClientRect();
   const x = e.touches[0].clientX - rect.left;
   direccion = x < rect.width / 2 ? -1 : 1;
@@ -42,32 +72,56 @@ canvas.addEventListener('touchend', () => {
 });
 
 function bucle(timestamp) {
-  // Calcula el tiempo transcurrido en segundos
   const deltaTime = (timestamp - tiempoAnterior) / 1000 || 0;
   tiempoAnterior = timestamp;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Actualizar y dibujar jugador
-  jugador.mover(direccion, deltaTime);
-  // Evita que salga del canvas
-  jugador.x = Math.max(jugador.ancho / 2, Math.min(canvas.width - jugador.ancho / 2, jugador.x));
-  jugador.dibujar(ctx);
-
-  // Actualizar proyectil
-  proyectil.actualizar(deltaTime);
-  proyectil.dibujar(ctx);
-
-  if (proyectil.colisionaCon(jugador)) {
-    jugador.puntuacion += proyectil.valor;
-    actualizarMarcador();
-    proyectil = crearProyectil();
-  } else if (proyectil.fueraDePantalla(canvas.height)) {
-    proyectil = crearProyectil();
+  if (!juegoTerminado) {
+    tiempoRestante -= deltaTime;
+    if (tiempoRestante <= 0) {
+      tiempoRestante = 0;
+      finDelJuego();
+    }
   }
 
-  requestAnimationFrame(bucle);
+  if (!juegoTerminado) {
+    jugador.mover(direccion, deltaTime);
+    jugador.x = Math.max(jugador.ancho / 2, Math.min(canvas.width - jugador.ancho / 2, jugador.x));
+  }
+  jugador.dibujar(ctx);
+
+  if (!juegoTerminado) {
+    proyectil.actualizar(deltaTime);
+    proyectil.dibujar(ctx);
+
+    if (proyectil.colisionaCon(jugador)) {
+      jugador.puntuacion += proyectil.valor;
+      if (proyectil.tipo === 'calavera') {
+        vidas -= 1;
+      } else if (proyectil.tipo === 'corazon') {
+        if (vidas < maxVidas) {
+          vidas += 1;
+        } else {
+          jugador.puntuacion += 10;
+        }
+      } else if (proyectil.tipo === 'reloj') {
+        tiempoRestante += 15;
+      }
+      if (vidas <= 0) {
+        finDelJuego();
+      }
+      proyectil = crearProyectil();
+    } else if (proyectil.fueraDePantalla(canvas.height)) {
+      proyectil = crearProyectil();
+    }
+  }
+
+  actualizarHud();
+
+  if (!juegoTerminado) {
+    requestAnimationFrame(bucle);
+  }
 }
 
-actualizarMarcador();
-// Inicia el bucle de animacion con requestAnimationFrame
+actualizarHud();
 requestAnimationFrame(bucle);
