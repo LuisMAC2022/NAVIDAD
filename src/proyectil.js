@@ -1,4 +1,8 @@
 // Clase que representa un proyectil que cae desde la parte superior
+// Imagen utilizada para representar al proyectil
+const imagenProyectil = new Image();
+imagenProyectil.src = 'assets/bananana.png';
+
 export default class Proyectil {
   constructor(x, y, valor = 1) {
     this.x = x;
@@ -15,8 +19,13 @@ export default class Proyectil {
   }
 
   dibujar(ctx) {
-    ctx.fillStyle = this.valor >= 0 ? 'green' : 'blue';
-    ctx.fillRect(this.x - this.tamano / 2, this.y - this.tamano / 2, this.tamano, this.tamano);
+    ctx.drawImage(
+      imagenProyectil,
+      this.x - this.tamano / 2,
+      this.y - this.tamano / 2,
+      this.tamano,
+      this.tamano
+    );
   }
 
   fueraDePantalla(alto) {
