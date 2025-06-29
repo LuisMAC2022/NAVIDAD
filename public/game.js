@@ -5,12 +5,8 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const bgm = document.getElementById('bgm');
 
+
 let idioma = 'de';
-const textos = {
-  de: { score: 'Punkte', finalScore: 'Endpunktzahl', retry: 'Erneut versuchen' },
-  es: { score: 'Puntuación', finalScore: 'Puntuación final', retry: 'Reintentar' },
-  ja: { score: 'スコア', finalScore: '最終スコア', retry: '再挑戦' },
-};
 let t = textos[idioma];
 
 function cambiarIdioma(nuevo) {
@@ -20,6 +16,7 @@ function cambiarIdioma(nuevo) {
   document.getElementById('retryButton').textContent = t.retry;
   actualizarHud();
 }
+
 
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
@@ -105,9 +102,11 @@ function reiniciarJuego() {
   requestAnimationFrame(bucle);
 }
 document.getElementById('retryButton').addEventListener('click', reiniciarJuego);
+
 document.getElementById('language').addEventListener('change', (e) => {
   cambiarIdioma(e.target.value);
 });
+
 
 function bucle(timestamp) {
   const deltaTime = (timestamp - tiempoAnterior) / 1000 || 0;
