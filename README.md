@@ -11,4 +11,5 @@ Para ejecutar la demo solo abre `public/index.html` en tu navegador. También pu
 
 ## Novedades
 
-La versión actual incluye un sencillo sistema de localización con textos en alemán, español y japonés. Además se añadió un botón para reiniciar la partida sin recargar la página.
+
+La versión actual incluye un sencillo sistema de localización con textos en alemán, español y japonés. Ahora es posible seleccionar el idioma desde la interfaz. Además se añadió un botón para reiniciar la partida sin recargar la página.
