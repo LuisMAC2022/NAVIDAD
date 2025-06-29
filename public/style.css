@@ -79,3 +79,10 @@ body {
   padding: 10px 20px;
   font-size: 20px;
 }
+
+#language {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 16px;
+}
