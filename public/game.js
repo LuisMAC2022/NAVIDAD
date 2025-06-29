@@ -5,6 +5,14 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const bgm = document.getElementById('bgm');
 
+const idioma = 'de';
+const textos = {
+  de: { score: 'Punkte', finalScore: 'Endpunktzahl', retry: 'Erneut versuchen' },
+  es: { score: 'Puntuación', finalScore: 'Puntuación final', retry: 'Reintentar' },
+  ja: { score: 'スコア', finalScore: '最終スコア', retry: '再挑戦' },
+};
+const t = textos[idioma];
+
 // Instancia del jugador en la parte inferior
 const jugador = new Jugador(canvas.width / 2, canvas.height - 30);
 // Ajusta la posicion vertical para mantener un margen de 20px
@@ -31,7 +39,7 @@ function formatearTiempo(t) {
 }
 
 function actualizarHud() {
-  document.getElementById('score').textContent = `Puntuación: ${jugador.puntuacion}`;
+  document.getElementById('score').textContent = `${t.score}: ${jugador.puntuacion}`;
   const contenedorVidas = document.getElementById('lives');
   contenedorVidas.innerHTML = '';
   for (let i = 0; i < vidas; i++) {
@@ -47,8 +55,11 @@ function finDelJuego() {
   direccion = 0;
   bgm.pause();
   const mensaje = document.getElementById('gameOver');
-  mensaje.textContent = `Puntuación final: ${jugador.puntuacion}`;
+  mensaje.textContent = `${t.finalScore}: ${jugador.puntuacion}`;
   mensaje.classList.remove('hidden');
+  const boton = document.getElementById('retryButton');
+  boton.textContent = t.retry;
+  boton.classList.remove('hidden');
 }
 
 // Control por teclado
@@ -70,6 +81,22 @@ canvas.addEventListener('touchstart', (e) => {
 canvas.addEventListener('touchend', () => {
   direccion = 0;
 });
+
+function reiniciarJuego() {
+  vidas = 3;
+  tiempoRestante = 60;
+  jugador.puntuacion = 0;
+  juegoTerminado = false;
+  document.getElementById('gameOver').classList.add('hidden');
+  const boton = document.getElementById('retryButton');
+  boton.classList.add('hidden');
+  bgm.currentTime = 0;
+  bgm.play();
+  proyectil = crearProyectil();
+  actualizarHud();
+  requestAnimationFrame(bucle);
+}
+document.getElementById('retryButton').addEventListener('click', reiniciarJuego);
 
 function bucle(timestamp) {
   const deltaTime = (timestamp - tiempoAnterior) / 1000 || 0;
