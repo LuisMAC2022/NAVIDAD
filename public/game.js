@@ -1,5 +1,5 @@
-import Jugador from '../src/jugador.js';
-import Proyectil from '../src/proyectil.js';
+import Jugador from './jugador.js';
+import Proyectil from './proyectil.js';
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
